@@ -1,2 +1,2 @@
 # MEAN-Based-Collaboration
-A complete MEAN (Mongo, Express, Angular, Node) based team collaboration application 
+A complete MEAN (Mongo, Express, Angular, Node) stack based team collaboration application.
