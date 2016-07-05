@@ -1,0 +1,47 @@
+<!doctype html>
+<html ng-app="myApp">
+
+<head>
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css"/>
+    <link rel="stylesheet" href="styles/main.css"/>
+
+</head>
+
+<body>
+<ui-view></ui-view>
+
+
+<script src="bower_components/angular/angular.js"></script>
+<script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+<script src="bower_components/angular-resource/angular-resource.js"></script>
+<script src="bower_components/angular-poller/angular-poller.js"></script>
+<script src="bower_components/angular-scroll-glue/src/scrollglue.js"></script>
+<script src="bower_components/socket.io-client/socket.io.js"></script>
+<script src="bower_components/angular-socket-io/socket.js"></script>
+<script src="bower_components/angular-file-upload/dist/angular-file-upload.js"></script>
+<!--<script src="bower_components/ng-file-upload/ng-file-upload.js"></script>-->
+<script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+<script src="bower_components/jquery/dist/jquery.js"></script>
+
+
+<!-- <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script> -->
+
+
+<script src="app.js"></script>
+<script src="auth/auth.service.js"></script>
+<script src="auth/auth.controller.js"></script>
+<script src="auth/shared.service.js"></script>
+<script src="channels/channels.service.js"></script>
+<script src="channels/channels.controller.js"></script>
+<script src="channels/profile.service.js"></script>
+<script src="users/users.service.js"></script>
+<script src="users/profile.controller.js"></script>
+<script src="channels/messages.service.js"></script>
+<script src="channels/messages.controller.js"></script>
+<script src="channels/userMessages.controller.js"></script>
+<!--<script src="channels/userMessages.service.js"></script>-->
+<script src="channels/socket.service.js"></script>
+
+
+</body>
+</html>

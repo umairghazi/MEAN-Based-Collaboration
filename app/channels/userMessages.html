@@ -1,0 +1,28 @@
+<div class="header">
+    <h1>{{userMessagesCtrl.channelName}}</h1>
+</div>
+
+<div scroll-glue id = "message-container" style = "overflow:auto; height: 99%">
+    <div class="message-wrap" ng-repeat="message in userMessagesCtrl.messages">
+        <img class="user-pic" ng-src="{{ channelsCtrl.getGravatar(message.FromUserId )}}"/>
+        <div class="message-info">
+            <div class="user-name">
+                <!--{{message.Message.username}}-->
+                {{message.FromUserId}}
+                <span class="timestamp">{{ message.Message.timestamp | date:'short'}}</span>
+            </div>
+            <div class="message">
+                {{message.Message.body}}
+            </div>
+        </div>
+    </div>
+</div>
+
+<form class="message-form" ng-submit="userMessagesCtrl.sendMessage()">
+    <div class="input-group">
+        <input type="text" class="form-control" ng-model="userMessagesCtrl.message" placeholder="Type a message">
+    <span class="input-group-btn">
+      <button class="btn btn-default" type="submit">Send</button>
+    </span>
+    </div>
+</form>

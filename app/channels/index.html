@@ -1,0 +1,51 @@
+<div class="main">
+    <div class="sidebar">
+
+        <div class="slack-name">
+            <h2>MEAN Slack</h2>
+        </div>
+
+        <div class="channel-list">
+            <div class="list-head">Channels</div>
+            <div class="channel" ng-repeat="channel in channelsCtrl.channels">
+                <a ui-sref="channels.messages({channelId: channel._id})" ui-sref-active="selected"># {{ channel.name
+                    }}</a>
+            </div>
+
+            <div class="channel create">
+                <a ui-sref="channels.create">+ create channel</a>
+            </div>
+        </div>
+
+        <div class="list-head">Direct Messages</div>
+        <div class="channel" ng-repeat="user in channelsCtrl.users">
+
+            <a ng-if="user._id !== channelsCtrl.profile.data._id" ui-sref="channels.direct({uid: user._id})"
+               ui-sref-active="selected">
+                <span class="presence" ng-class="{online: user.online}"></span>
+                {{ user.username }}
+            </a>
+        </div>
+
+        <div class="my-info">
+            <img class="user-pic" ng-src="{{ channelsCtrl.getGravatar(channelsCtrl.profile._id) }}"/>
+            <div class="user-info">
+                <div class="user-name">
+                    {{ channelsCtrl.profile.data.username}}
+                    <span class="presence" ng-class="{online: channelsCtrl.profile.online}"></span>
+                    {{ channelsCtrl.profile.data.username }}
+                </div>
+
+                <div class="options">
+                    <a ui-sref="profile">edit profile</a> /
+                    <a href="#" ng-click="channelsCtrl.logout()">logout</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="message-pane">
+        <ui-view></ui-view>
+    </div>
+
+</div>
