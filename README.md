@@ -15,6 +15,7 @@ A complete MEAN (Mongo, Express, Angular, Node) stack based team collaboration a
 - Accesses to users
 - Improve file-upload
 - User interface change - material design
+- Post to different groups/users using # or @.
 
 | Nice to have |
 | ------------ |
