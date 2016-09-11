@@ -1,5 +1,7 @@
 
 var mongoose = require('mongoose');
+var mongoosastic = require('mongoosastic');
+
 var Schema = mongoose.Schema;
 
 var ChannelMsgSchema = new Schema({
@@ -10,8 +12,8 @@ var ChannelMsgSchema = new Schema({
         timestamp: Date,
         uid : String,
         username : String,
-        encodedname: String
-    }
+        encodedname: String,
+    },
 });
 
 ChannelMsgSchema.statics = {
@@ -22,4 +24,7 @@ ChannelMsgSchema.statics = {
     }
 };
 
+ChannelMsgSchema.plugin(mongoosastic);
+
 mongoose.model('ChannelMsg', ChannelMsgSchema);
+

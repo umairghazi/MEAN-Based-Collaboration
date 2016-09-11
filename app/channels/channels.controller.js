@@ -7,7 +7,7 @@ angular.module('myApp')
 
         self.profile = profile;
         self.channels = channels.data;
-        self.getGravatar = Users.getAvatar;
+        // self.getGravatar = Users.getAvatar;
         self.userss = Users.all();
         self.userss.then(function (data) {
             self.users = data;
