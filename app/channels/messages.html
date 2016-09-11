@@ -4,8 +4,7 @@
 
 <div scroll-glue id="message-container" style="overflow:auto; height: 99%">
     <div class="message-wrap" ng-repeat="message in messagesCtrl.messages">
-        <!-- <img class="user-pic" ng-src="{{ channelsCtrl.getGravatar(message.Message.uid )}}"/> -->
-        <img class="user-pic" src="https://unsplash.it/36/36"/>
+        <img class="user-pic" ng-src="{{ channelsCtrl.getGravatar(message.Message.uid )}}"/>
         <div class="message-info">
             <div class="user-name">
                 <!--{{channelsCtrl.getDisplayName(message.Message.uid)}}-->
