@@ -14,7 +14,7 @@ function randomStringAsBase64Url(size) {
 }
 
 
-module.exports = function (app, io) {
+module.exports = function(app, io) {
 
     // User Routes
     var users = require('../controllers/users');
@@ -45,7 +45,7 @@ module.exports = function (app, io) {
 
     var userChats = require('../controllers/userMessages');
 
-    app.post('/api/chats/users', auth.ensureAuthenticated, function (req, res) {
+    app.post('/api/chats/users', auth.ensureAuthenticated, function(req, res) {
         userChats.create(req, res);
         req.body.timestamp = Date.now();
 
@@ -75,7 +75,7 @@ module.exports = function (app, io) {
     // app.del('/api/chats/:chatId', auth.ensureAuthenticated, auth.chat.hasAuthorization, chats.destroy);
 
     var channelMessages = require('../controllers/channelMessages');
-    app.post('/api/chats', auth.ensureAuthenticated, function (req, res) {
+    app.post('/api/chats', auth.ensureAuthenticated, function(req, res) {
         channelMessages.create(req, res);
         req.body.timestamp = Date.now();
 
@@ -93,6 +93,11 @@ module.exports = function (app, io) {
         io.sockets.emit('posted', send);
 
     });
+
+    app.get('/api/elasticsearch', function(req, res) {
+        channelMessages.search(req,res);
+    });
+
     app.get('/api/chats', channelMessages.messages);
     app.get('/api/chats/:channelId', channelMessages.messagesForChannel);
 
@@ -103,16 +108,16 @@ module.exports = function (app, io) {
     // });
 
     var fileEnc = require('../controllers/filenameEnc');
-    app.post('/api/chats/uploads', multipartyMiddleware, function (req, res, next) {
+    app.post('/api/chats/uploads', multipartyMiddleware, function(req, res, next) {
         var tmp_path = req.files.file.path;
         req.body.originalName = req.files.file.name;
         req.body.modifiedName = randomStringAsBase64Url(20);
         fileEnc.create(req, res); //Database entry for original and encoded names
         var target_path = 'uploads/' + req.body.modifiedName;
-        fs.rename(tmp_path, target_path, function (err) {
+        fs.rename(tmp_path, target_path, function(err) {
             if (err) throw err;
             // delete the temporary file, so that the explicitly set temporary upload dir does not get filled with unwanted files
-            fs.unlink(tmp_path, function () {
+            fs.unlink(tmp_path, function() {
                 if (err) throw err;
                 // res.send('File uploaded to: ' + target_path + ' - ' + req.files.file.size + ' bytes');
             });
@@ -158,10 +163,10 @@ module.exports = function (app, io) {
     //     form.parse(req);
     // });
 
-    app.get('/download', function (req, res) { // create download route
+    app.get('/download', function(req, res) { // create download route
         // var path = require('path'); // get path
         var dir = path.resolve(".") + '/uploads/'; // give path
-        fs.readdir(dir, function (err, list) { // read directory return  error or list
+        fs.readdir(dir, function(err, list) { // read directory return  error or list
             if (err) return res.json(err);
             else
                 res.json(list);
@@ -170,23 +175,23 @@ module.exports = function (app, io) {
     });
 
 
-    app.get('/getFile/:file(*)', function (req, res, next) { // this routes all types of file
+    app.get('/getFile/:file(*)', function(req, res, next) { // this routes all types of file
         var file = req.params.file;
         var filepath = './uploads/' + file;
-        fileEnc.findFile(req, res, function (err, data) {
+        fileEnc.findFile(req, res, function(err, data) {
             if (data === null) {
                 res.json('no such file found - ' + file);
             } else {
                 originalName = data.originalName;
                 var targetpath = './uploads/' + originalName;
 
-                fs.copy(filepath, targetpath, function (err) {
+                fs.copy(filepath, targetpath, function(err) {
                     if (err) throw err;
                     var path = require('path');
                     var path = path.resolve(".") + '/uploads/' + originalName;
                     res.download(path); // magic of download fuction
                 });
-                fs.remove(targetpath, function (err) {
+                fs.remove(targetpath, function(err) {
                     if (err) console.error(err);
                     console.log('removed');
                 });
@@ -194,9 +199,9 @@ module.exports = function (app, io) {
         });
     });
 
-    io.on('connection', function (socket) {
+    io.on('connection', function(socket) {
         console.log('client connected');
-        socket.on('fromClient', function (data) {
+        socket.on('fromClient', function(data) {
             channelMessages.uploadFile(data);
         });
     });
@@ -206,7 +211,7 @@ module.exports = function (app, io) {
     app.param('chatId', chats.chat);
 
     // Angular Routes
-    app.get('/partials/*', function (req, res) {
+    app.get('/partials/*', function(req, res) {
         var requestedView = path.join('./', req.url);
         res.render(requestedView);
     });
